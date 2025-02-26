@@ -28,3 +28,10 @@ wheels/
 venv/
 
 .DS_Store
+*tmp*
+
+# dbt
+target/
+logs/
+tutorial.duckdb
+ect
