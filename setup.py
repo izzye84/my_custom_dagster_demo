@@ -14,6 +14,8 @@ setup(
         "wordcloud",
         "dagster-dbt",
         "dbt-duckdb",
+        "google-auth",
+        "google-api-python-client",
     ],
     extras_require={"dev": ["dagster-webserver", "pytest"]},
 )
