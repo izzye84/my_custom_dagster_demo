@@ -35,3 +35,4 @@ target/
 logs/
 tutorial.duckdb
 ect
+.user.yml
