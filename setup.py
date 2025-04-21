@@ -7,6 +7,7 @@ setup(
         "dagster",
         "dagster-cloud",
         "boto3",
+        "holidays",
         "pandas",
         "matplotlib",
         "textblob",

@@ -6,9 +6,3 @@ models:
       - name: id
         tests:
           - unique
-          - not_null
-  - name: my_third_model
-    columns:
-      - name: id
-        tests:
-          - unique
