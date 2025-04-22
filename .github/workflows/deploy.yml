@@ -10,8 +10,8 @@ concurrency:
   group: ${{ github.ref }}/deploy
   cancel-in-progress: true
 env:
-  DAGSTER_CLOUD_URL: "http://izzy-serverless.dagster.cloud"
-  DAGSTER_CLOUD_ORGANIZATION: "izzy-serverless"
+  DAGSTER_CLOUD_URL: "http://izzy-serverless-test.dagster.cloud"
+  DAGSTER_CLOUD_ORGANIZATION: "izzy-serverless-test"
   DAGSTER_CLOUD_API_TOKEN: ${{ secrets.DAGSTER_CLOUD_API_TOKEN }}
   ENABLE_FAST_DEPLOYS: 'true'
   PYTHON_VERSION: '3.11'
