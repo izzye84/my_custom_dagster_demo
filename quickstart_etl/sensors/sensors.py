@@ -1,3 +1,4 @@
+import json
 import os
 
 import dagster as dg
@@ -55,8 +56,10 @@ FOLDER_PATHS = [
 @dg.sensor(job=sor_1_job_1, minimum_interval_seconds=30)
 def new_files_sensor(context: dg.SensorEvaluationContext):
     # Load the last processed timestamps from the cursor
-    last_processed = context.cursor or {path: 0 for path in FOLDER_PATHS}
-    last_processed = eval(last_processed)  # Convert string cursor to dictionary
+    if context.cursor is None:
+        last_processed = {path: 0 for path in FOLDER_PATHS}
+    else:
+        last_processed = json.loads(context.cursor)
 
     all_new_files = True
     new_files = {}
@@ -78,7 +81,7 @@ def new_files_sensor(context: dg.SensorEvaluationContext):
 
     if all_new_files:
         # Update the cursor with the latest processed times
-        context.update_cursor(str(last_processed))
+        context.update_cursor(json.dumps(last_processed))  # Use json.dumps to serialize
         yield dg.RunRequest(run_key="new_files_detected")
     else:
         yield dg.SkipReason("Not all folders have new files yet.")

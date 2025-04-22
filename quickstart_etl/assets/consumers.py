@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import dagster as dg
 
 from .sor_1 import asset_6, asset_17
@@ -23,6 +25,22 @@ def asset_29():
           deps=[asset_21])
 def asset_30():
     return [7, 8, 9]
+
+
+# Create a freshness check that expects asset_30 to be materialized at least every 24 hours
+asset_30_freshness_check = dg.build_last_update_freshness_checks(
+    assets=["asset_30"],
+    lower_bound_delta=timedelta(minutes=5),
+    deadline_cron="0 11 * * *",  # Check at 11 AM daily
+    timezone="America/Denver",  
+)
+
+# Define freshness check sensor
+freshness_checks_sensor = dg.build_sensor_for_freshness_checks(
+    freshness_checks=asset_30_freshness_check,
+    minimum_interval_seconds=30,
+)
+    
 
 @dg.asset(group_name="consumer_4",
           tags={"consumer_4":""},
