@@ -4,15 +4,15 @@ import requests
 import time
 from typing import Any, Dict, List
 
-from dagster import asset, AssetExecutionContext, Config, ConfigurableResource, Field, MetadataValue
+from dagster import asset, AssetExecutionContext, Config, ConfigurableResource, EnvVar, Field, MetadataValue
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 import pandas as pd
 
 
 class GoogleSheetsResource(ConfigurableResource):
-    credentials_file: str = "/Users/izzy/Downloads/google_credentials.json"
-    spreadsheet_id: str = "1Qlp3HVaJd0PHvb546rA0SgqtMsTO56Yp5fPWm6M04YU"
+    credentials_file: str = EnvVar("GOOGLE_CREDENTIALS_FILE")
+    spreadsheet_id: str = EnvVar("GOOGLE_SPREADSHEET_ID")
     scopes: list[str] = ["https://www.googleapis.com/auth/spreadsheets"]
     _service: Any = PrivateAttr(default=None)
     
